@@ -33,15 +33,10 @@ class CarListView(generic.ListView):
     paginate_by = 5
 
 
-def car_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
-    try:
-        car = Car.objects.get(id=pk)
-    except Car.DoesNotExist:
-        raise Http404("Car does not exist")
-    context = {
-        "car": car,
-    }
-    return render(request, "taxi/car_detail.html", context=context)
+class CarDetailView(generic.DetailView):
+    model = Car
+    context_object_name = "car"
+    template_name = "taxi/car_detail.html"
 
 
 class DriverListView(generic.ListView):
